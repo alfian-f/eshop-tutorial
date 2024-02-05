@@ -14,11 +14,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    private int productId = 0;
 
     @Override
     public Product create(Product product) {
+        product.setProductId(Integer.toString(++productId));
         productRepository.create(product);
         return product;
+    }
+
+    @Override
+    public Product get(int id) {
+        Iterator<Product> productIterator = productRepository.findAll();
+
+        while(productIterator.hasNext()) {
+            Product product = productIterator.next();
+            if (product.getProductId().equals(Integer.toString(id))) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        Product item = get(id);
+        return item != null && productRepository.delete(item);
     }
 
     @Override
