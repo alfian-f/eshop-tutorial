@@ -40,6 +40,11 @@ public class ProductServiceImpl implements ProductService {
     public boolean delete(int id) {
         Product item = get(id);
         return item != null && productRepository.delete(item);
+
+    @Override
+    public Product edit(Product product) {
+        productRepository.edit(product);
+        return product;
     }
 
     @Override
