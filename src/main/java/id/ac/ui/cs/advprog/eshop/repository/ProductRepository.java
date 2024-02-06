@@ -19,6 +19,7 @@ public class ProductRepository {
 
     public boolean delete(Product product) {
         return productData.remove(product);
+    }
 
     public Product edit(Product product) {
         for (int i = 0; i < productData.size(); i++) {
