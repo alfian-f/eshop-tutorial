@@ -79,4 +79,42 @@ class ProductServiceImplTest {
 
         assertNull(retrievedProduct);
     }
+
+    @Test
+    void testDeleteProduct() {
+        Product product = new Product();
+        product.setProductId("1");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        List<Product> productList = List.of(product);
+
+        Iterator<Product> productIterator = productList.iterator();
+        when(productRepository.findAll()).thenReturn(productIterator);
+
+        when(productRepository.delete(product)).thenReturn(true);
+
+        boolean deletedProduct = productService.delete(1);
+
+        assertTrue(deletedProduct);
+    }
+
+    @Test
+    void testDeleteProductNotFound() {
+        Product product = new Product();
+        product.setProductId("1");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        List<Product> productList = List.of(product);
+
+        Iterator<Product> productIterator = productList.iterator();
+        when(productRepository.findAll()).thenReturn(productIterator);
+
+        boolean deletedProduct = productService.delete(2);
+
+        assertFalse(deletedProduct);
+    }
 }
