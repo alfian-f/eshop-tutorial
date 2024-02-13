@@ -117,4 +117,28 @@ class ProductServiceImplTest {
 
         assertFalse(deletedProduct);
     }
+
+    @Test
+    void testEditProduct() {
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductName("Sampo Cap Bambang");
+        product1.setProductQuantity(100);
+        productRepository.create(product1);
+
+        Product product2 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product2.setProductName("Sampo Cap Usep");
+        product2.setProductQuantity(50);
+        productRepository.create(product2);
+
+        when(productRepository.edit(product2)).thenReturn(product2);
+
+        Product editedProduct = productService.edit(product2);
+
+        assertEquals(product2.getProductName(), editedProduct.getProductName());
+        assertEquals(product2.getProductQuantity(), editedProduct.getProductQuantity());
+        assertNotEquals(product1.getProductName(), editedProduct.getProductName());
+        assertNotEquals(product1.getProductQuantity(), editedProduct.getProductQuantity());
+    }
 }
