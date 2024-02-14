@@ -6,7 +6,7 @@
 Alfian Fadhlurrahman | 2206821683 | Tutorial - Advanced Programming
 
 
-[deployed app]: http://bookhaven-k6-tk.pbp.cs.ui.ac.id
+[deployed app]: https://eshop-advprog-alfian-f.koyeb.app/product/list
 [deployed app]
 
 ## Module 1
