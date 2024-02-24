@@ -29,16 +29,17 @@ class ProductServiceImplTest {
     @Test
     void testCreateProduct() {
         Product product = new Product();
+        product.setProductId("1");
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
         productRepository.create(product);
 
         Product savedProduct = productService.create(product);
 
-        assertNotNull(savedProduct.getProductId());
-        assertEquals(product.getProductId(), savedProduct.getProductId());
-        assertEquals(product.getProductName(), savedProduct.getProductName());
-        assertEquals(product.getProductQuantity(), savedProduct.getProductQuantity());
+        assertNotNull(savedProduct.getId());
+        assertEquals(product.getId(), savedProduct.getId());
+        assertEquals(product.getName(), savedProduct.getName());
+        assertEquals(product.getQuantity(), savedProduct.getQuantity());
     }
 
     @Test
@@ -52,11 +53,11 @@ class ProductServiceImplTest {
         List<Product> productList = List.of(product);
 
         Iterator<Product> productIterator = productList.iterator();
-        when(productRepository.findAll()).thenReturn(productIterator);
 
-        Product retrievedProduct = productService.get(1);
+        when(productService.findById("1")).thenReturn(product);
 
-        assertNotNull(retrievedProduct);
+        Product retrievedProduct = productService.findById("1");
+
         assertEquals(product.getProductId(), retrievedProduct.getProductId());
         assertEquals(product.getProductName(), retrievedProduct.getProductName());
         assertEquals(product.getProductQuantity(), retrievedProduct.getProductQuantity());
@@ -73,9 +74,8 @@ class ProductServiceImplTest {
         List<Product> productList = List.of(product);
 
         Iterator<Product> productIterator = productList.iterator();
-        when(productRepository.findAll()).thenReturn(productIterator);
 
-        Product retrievedProduct = productService.get(2);
+        Product retrievedProduct = productService.findById("2");
 
         assertNull(retrievedProduct);
     }
@@ -91,11 +91,10 @@ class ProductServiceImplTest {
         List<Product> productList = List.of(product);
 
         Iterator<Product> productIterator = productList.iterator();
-        when(productRepository.findAll()).thenReturn(productIterator);
 
-        when(productRepository.delete(product)).thenReturn(true);
+        when(productService.deleteProductById("1")).thenReturn(true);
 
-        boolean deletedProduct = productService.delete(1);
+        boolean deletedProduct = productService.deleteProductById("1");
 
         assertTrue(deletedProduct);
     }
@@ -110,10 +109,7 @@ class ProductServiceImplTest {
 
         List<Product> productList = List.of(product);
 
-        Iterator<Product> productIterator = productList.iterator();
-        when(productRepository.findAll()).thenReturn(productIterator);
-
-        boolean deletedProduct = productService.delete(2);
+        boolean deletedProduct = productService.deleteProductById("2");
 
         assertFalse(deletedProduct);
     }
@@ -132,9 +128,9 @@ class ProductServiceImplTest {
         product2.setProductQuantity(50);
         productRepository.create(product2);
 
-        when(productRepository.edit(product2)).thenReturn(product2);
+        when(productRepository.update(product1.getId(), product2)).thenReturn(product2);
 
-        Product editedProduct = productService.edit(product2);
+        Product editedProduct = productService.update(product1.getId(), product2);
 
         assertEquals(product2.getProductName(), editedProduct.getProductName());
         assertEquals(product2.getProductQuantity(), editedProduct.getProductQuantity());

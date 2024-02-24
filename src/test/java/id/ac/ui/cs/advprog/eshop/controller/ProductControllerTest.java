@@ -57,9 +57,9 @@ class ProductControllerTest {
         product.setProductQuantity(100);
         productRepository.create(product);
 
-        when(productService.get(1)).thenReturn(product);
+        when(productService.findById("1")).thenReturn(product);
 
-        String page = productController.editProductPage(model, 1);
+        String page = productController.editProductPage("1", model);
 
         assertEquals("EditProduct", page);
     }
@@ -72,7 +72,7 @@ class ProductControllerTest {
         product.setProductQuantity(100);
         productRepository.create(product);
 
-        String page = productController.editProductPost(product);
+        String page = productController.editProductPost(product, model);
 
         assertEquals("redirect:list", page);
     }
@@ -108,7 +108,7 @@ class ProductControllerTest {
         product.setProductQuantity(100);
         productRepository.create(product);
 
-        String page = productController.deleteProduct(1);
+        String page = productController.deleteProduct("1");
 
         assertEquals("redirect:/product/list", page);
     }
