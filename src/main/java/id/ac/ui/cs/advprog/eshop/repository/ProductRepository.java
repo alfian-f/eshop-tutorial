@@ -33,8 +33,7 @@ public class ProductRepository implements IProductRepository{
     }
 
     public Product update(String id, Product updatedCar) {
-        for (int i = 0; i < productData.size(); i++) {
-            Product product = productData.get(i);
+        for (Product product : productData) {
             if (product.getId().equals(id)) {
                 product.setName(updatedCar.getName());
                 product.setQuantity(updatedCar.getQuantity());
