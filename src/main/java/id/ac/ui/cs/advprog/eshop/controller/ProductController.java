@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 import id.ac.ui.cs.advprog.eshop.model.Car;
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
+import id.ac.ui.cs.advprog.eshop.service.CarService;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,16 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{productId}")
-    public String editProductPage(Model model, @PathVariable int productId) {
-        Product product = service.get(productId);
+    public String editProductPage(@PathVariable String productId, Model model) {
+        Product product = service.findById(productId);
         model.addAttribute("product", product);
         return "EditProduct";
     }
 
     @PostMapping("/edit")
-    public String editProductPost(@ModelAttribute Product product) {
-        service.edit(product);
+    public String editProductPost(@ModelAttribute Product product, Model model) {
+        System.out.println(product.getId());
+        service.update(product.getId(), product);
         return "redirect:list";
     }
 
@@ -55,8 +56,8 @@ public class ProductController {
     }
 
     @GetMapping("/delete/{productId}")
-    public String deleteProduct(@PathVariable int productId) {
-        service.delete(productId);
+    public String deleteProduct(@PathVariable String productId) {
+        service.deleteProductById(productId);
         return "redirect:/product/list";
     }
 }
@@ -65,7 +66,7 @@ public class ProductController {
 @RequestMapping("/car")
 class CarController extends ProductController{
     @Autowired
-    private CarServiceImpl carService;
+    private CarService carService;
 
     @GetMapping("/createCar")
     public String createCarPage(Model model) {

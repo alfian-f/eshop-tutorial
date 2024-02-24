@@ -1,11 +1,10 @@
 package id.ac.ui.cs.advprog.eshop.service;
-
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import java.util.List;
 public interface ProductService {
-    Product create(Product product);
-    Product get(int id);
-    boolean delete(int id);
-    Product edit(Product product);
-    List<Product> findAll();
+    public Product create(Product car);
+    public List<Product> findAll();
+    Product findById(String productId);
+    public Product update(String carId, Product product);
+    public boolean deleteProductById(String productId);
 }
