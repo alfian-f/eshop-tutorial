@@ -25,20 +25,13 @@ public class PaymentServiceImplTest {
     @InjectMocks
     PaymentServiceImpl paymentService;
 
-    @InjectMocks
-    OrderServiceImpl orderService;
-
-
     @Mock
     PaymentRepository paymentRepository;
-    @Mock
-    OrderRepository orderRepository;
 
     List<Payment> payments;
     List<Order> orders;
 
     Map<String, String> voucherData;
-    Map<String, String> codData;
 
     @BeforeAll
     static void mocking() {
